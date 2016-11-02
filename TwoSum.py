@@ -1,6 +1,5 @@
 # Author: John Jiang
 # Date  : 2016/7/28
-import unittest
 
 
 def two_sum(numbers, target):
@@ -49,18 +48,3 @@ def two_sum_2(sorted_nums, target):
             return i + 1, j + 1
 
     raise Exception('No two sum solution')
-
-
-class Test(unittest.TestCase):
-    def setUp(self):
-        self.nums = [i for i in range(100)]
-
-    def test_two_sum(self):
-        res = two_sum(self.nums, 43)
-        res1 = two_sum_1(self.nums, 43)
-        res2 = two_sum_2(self.nums, 43)
-        self.assertEqual(res1, res2)
-        print(res)
-
-if __name__ == '__main__':
-    unittest.main()
