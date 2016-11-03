@@ -1,7 +1,8 @@
 # Author: John Jiang
 # Date  : 2016/7/30
 
-# Given an integer array with all positive numbers and no duplicates, find the number of possible combinations that add up to a positive integer target.
+# Given an integer array with all positive numbers and no duplicates, find the number of possible combinations that
+# add up to a positive integer target.
 
 # Example:
 #
@@ -24,7 +25,6 @@
 # What if negative numbers are allowed in the given array?
 # How does it change the problem?
 # What limitation we need to add to the question to allow negative numbers?
-import unittest
 
 
 def combinationSum4(nums, target):
@@ -41,11 +41,3 @@ def combinationSum4(nums, target):
             if x + y <= target:
                 dp[x + y] += dp[x]
     return dp[target]
-
-
-class Test(unittest.TestCase):
-    def setUp(self):
-        self.nums = [1, 2, 3]
-
-    def test_combination(self):
-        self.assertEqual(7, combinationSum4(self.nums, 4))

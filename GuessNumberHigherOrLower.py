@@ -12,8 +12,7 @@ guess = lambda x: 4 - x
 
 
 class Solution(object):
-    @staticmethod
-    def guess_number(n):
+    def guess_number(self, n):
         """
         :type n: int
         :rtype: int
@@ -35,4 +34,4 @@ class Solution(object):
         return -1
 
 
-print(Solution.guess_number(10))
+print(Solution().guess_number(10))
