@@ -26,13 +26,13 @@ def inorder_iter(self, root):
     3. 直到 P 为空 或者栈为空
     """
     p = root
-    stack = []
-    while p or stack:
+    s = []
+    while p or s:
         while p:
-            stack.append(p)
+            s.append(p)
             p = p.left
-        if stack:
-            p = stack.pop()
+        if s:
+            p = s.pop()
             print(p.val)
             p = p.right
 
@@ -53,14 +53,14 @@ def inorder_iter1(self, root):
 def preorder_iter(self, root):
     """先序遍历"""
     p = root
-    stack = []
-    while p or stack:
+    s = []
+    while p or s:
         while p:
             print(p.val)
-            stack.append(p)
+            s.append(p)
             p = p.left
-        if stack:
-            p = stack.pop()
+        if s:
+            p = s.pop()
             p = p.right
 
 
