@@ -33,3 +33,4 @@ class Solution(object):
                     dp[x][y] = min(dp[x - 1][y], dp[x][y - 1], dp[x - 1][y - 1]) + 1
                 ans = max(ans, dp[x][y])
         return ans * ans
+import re
