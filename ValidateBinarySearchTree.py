@@ -28,17 +28,34 @@ class TreeNode(object):
         self.right = None
 
 
-class Solution(object):
+class Solution:
     def isValidBST(self, root):
         """
         :type root: TreeNode
         :rtype: bool
         """
-        return self._isValidBST(root, float('-inf'), float('inf'))
+        return self.valid(root, float('-inf'), float('inf'))
 
-    def _isValidBST(self, node, min, max):
+    def valid(self, node, min, max):
         if node is None:
             return True
-        if node.val >= max or node.val <= min:
-            return False
-        return self._isValidBST(node.left, min, node.val) and self._isValidBST(node.right, node.val, max)
+        return (min < node.val < max
+                and self.valid(node.left, min, node.val)
+                and self.valid(node.right, node.val, max))
+
+
+class Solution2:
+    prev = None
+
+    def isValidBST(self, root):
+        return self.mononical_increasing(root)
+
+    def mononical_increasing(self, node):
+        if node is None:
+            return True
+        # 中序遍历
+        if self.mononical_increasing(node.left):
+            if self.prev is not None and self.prev.val > node.val:
+                return False
+            self.prev = node
+            return self.mononical_increasing(node.right)
