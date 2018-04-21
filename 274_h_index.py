@@ -27,7 +27,7 @@ class Solution:
             # 对于引用次数超过 n 的文章，记在 n 头上
             count[min(n, i)] += 1
 
-        for i in range(len(count), 0, -1):
+        for i in range(len(count), -1, -1):
             if count[i] >= i:
                 return i
             count[i - 1] += count[i]
