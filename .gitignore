@@ -1,2 +1,4 @@
 # Created by .ignore support plugin (hsz.mobi)
 .idea/
+/helper/leetcode.json
+/helper/problem_detail.json
