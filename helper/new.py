@@ -96,6 +96,20 @@ def touch(filename, content=''):
     print('Created', name)
 
 
+def tmp():
+    with open('./problems.json', encoding='utf-8') as f:
+        problems = json.load(f)
+
+    os.chdir('..')
+    for f in os.listdir('.'):
+        if f.startswith('000'):
+            slug = f[4:-3].replace('_', '-')
+            for k, v in problems.items():
+                if slug == v:
+                    name = k.zfill(3) + '_' + slug.replace('-', '_') + '.py'
+                    os.rename(f, name)
+
+
 def main():
     id = input('problem id>').strip()
     slug = get_problem_title_slug(id)
@@ -108,4 +122,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-    # get_problem_list()
