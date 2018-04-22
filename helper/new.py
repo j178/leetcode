@@ -7,6 +7,9 @@ import html2text
 import requests
 from pytz import timezone
 
+BASE_DIR = os.path.dirname(__file__)
+PROBLEMS_JSON = os.path.join(BASE_DIR, 'problems.json')
+
 
 def get_problem_list():
     url = 'https://leetcode.com/api/problems/all/'
@@ -19,12 +22,12 @@ def get_problem_list():
         title = problem['stat']['question__title_slug']
         result[id] = title
 
-    with open('problems.json', 'w')as f:
+    with open(PROBLEMS_JSON, 'w')as f:
         json.dump(result, f, sort_keys=True, indent=2, ensure_ascii=False)
 
 
 def get_problem_title_slug(number):
-    with open('./problems.json', encoding='utf-8') as f:
+    with open(PROBLEMS_JSON, encoding='utf-8') as f:
         problems = json.load(f)
 
     name = problems[number]
@@ -90,14 +93,14 @@ def compose_new(detail):
 
 
 def touch(filename, content=''):
-    name = os.path.join('..', filename)
+    name = os.path.join(os.path.dirname(BASE_DIR), filename)
     with open(name, 'w', newline='\n') as f:
         f.write(content)
     print('Created', name)
 
 
 def tmp():
-    with open('./problems.json', encoding='utf-8') as f:
+    with open(PROBLEMS_JSON, encoding='utf-8') as f:
         problems = json.load(f)
 
     os.chdir('..')
