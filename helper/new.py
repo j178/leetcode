@@ -2,12 +2,12 @@ import json
 import os
 import textwrap
 from datetime import datetime
-
+import inspect
 import html2text
 import requests
 from pytz import timezone
 
-BASE_DIR = os.path.dirname(__file__)
+BASE_DIR = os.path.dirname(os.path.normpath(__file__))
 PROBLEMS_JSON = os.path.join(BASE_DIR, 'problems.json')
 
 
@@ -87,7 +87,22 @@ def compose_new(detail):
     content.append('')
     content.append(detail['codeDefinition'])
     content.append('\n')
-    content.append("if __name__ == '__main__':\n    s = Solution()")
+    ns = {}
+    exec(detail['codeDefinition'], ns)
+    solution = ns['Solution']
+    func = [name for name in solution.__dict__
+            if not name.startswith('_') and inspect.isfunction(getattr(solution, name))][0]
+    args = detail['sampleTestCase'].strip()
+
+    content.append(textwrap.dedent('''\
+    if __name__ == '__main__':
+        s = Solution()
+        r = s.{func}({args})
+        print(r)
+    '''.format(
+            func=func,
+            args=args
+    )))
 
     return '\n'.join(content)
 
