@@ -88,21 +88,22 @@ def compose_new(detail):
     content.append(detail['codeDefinition'])
     content.append('\n')
     ns = {}
-    exec(detail['codeDefinition'], ns)
-    solution = ns['Solution']
-    func = [name for name in solution.__dict__
-            if not name.startswith('_') and inspect.isfunction(getattr(solution, name))][0]
-    args = detail['sampleTestCase'].strip()
+    try:
+        exec(detail['codeDefinition'], ns)
+    except SyntaxError:
+        call = ''
+    else:
+        solution = ns['Solution']
+        func = [name for name in solution.__dict__
+                if not name.startswith('_') and inspect.isfunction(getattr(solution, name))][0]
+        args = detail['sampleTestCase'].strip()
+        call = 's.{func}({args})'.format(func=func, args=args)
 
     content.append(textwrap.dedent('''\
     if __name__ == '__main__':
         s = Solution()
-        r = s.{func}({args})
-        print(r)
-    '''.format(
-            func=func,
-            args=args
-    )))
+        {call}
+    '''.format(call=call)))
 
     return '\n'.join(content)
 
